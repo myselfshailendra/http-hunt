@@ -1,5 +1,10 @@
 require './http_hunt'
 
-http_hunt = HttpHunt.new
+begin
+  http_hunt = HttpHunt.new
+  http_hunt.calculate_size
+rescue StandardError => e
+  puts e.message
+end
 
 puts http_hunt.output
