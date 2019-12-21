@@ -1,24 +1,28 @@
 require 'httparty'
 
 class HttpHunt
-  attr_accessor :output
-  USER_ID = '8Bw9ryvH'.freeze
+  attr_accessor :response
+  HEADERS = { "userId"  => '8Bw9ryvH', "content-type" => 'application/json' }.freeze
   HOST = "https://http-hunt.thoughtworks-labs.net".freeze
   INPUT_ROUTE = '/challenge/input'.freeze
   OUTPUT_ROUTE = '/challenge/output'.freeze
-  CONTENT_TYPE = 'application/json'.freeze
 
   def initialize
-    @output = 'idial'
+    @response = 'idial'
   end
 
   def calculate_size
-    headers = { "userId"  => USER_ID, "content-type" => CONTENT_TYPE }
-    @output = HTTParty.get(HOST + INPUT_ROUTE, headers: headers)
-    if @output.has_key?('text')
-      paragraph = @output['text']
-      total_characters = paragraph.size
-      @output = HTTParty.post(HOST+OUTPUT_ROUTE, query: { "count": total_characters }, headers: headers)
-    end
+    @response = receive_string
+    return unless @response.has_key?('text')
+    total_characters = @response['text'].size
+    @response = send_result(total_characters)
+  end
+
+  def receive_string
+    HTTParty.get(HOST + INPUT_ROUTE, headers: HEADERS)
+  end
+
+  def send_result(total_characters)
+    HTTParty.post(HOST + OUTPUT_ROUTE, query: { "count": total_characters }, headers: HEADERS)
   end
 end
