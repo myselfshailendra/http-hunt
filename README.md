@@ -38,12 +38,12 @@ gem install httparty
 To play game on satge 1, run:
 
 ```
-ruby play.rb stag1
+    ruby play.rb stag1
 ```
 
 
 To play game on satge 2, run:
 
 ```
-ruby play.rb stag2
+    ruby play.rb stag2
 ```
