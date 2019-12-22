@@ -25,6 +25,13 @@ class HttpHunt
     @response = send_result( { "wordCount": total_words } )
   end
 
+  def calculate_sentences
+    @response = receive_string
+    return unless @response.has_key?('text')
+    total_sentences = @response['text'].split(/[.?]+[ ]/).size
+    @response = send_result( { "sentenceCount": total_sentences } )
+  end
+
   def receive_string
     HTTParty.get(HOST + INPUT_ROUTE, headers: HEADERS)
   end

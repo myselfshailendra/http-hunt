@@ -13,6 +13,8 @@ begin
     http_hunt.calculate_characters
   when 'stag2'
     http_hunt.calculate_words
+  when 'stag3'
+    http_hunt.calculate_sentences
   else
     puts 'Invalid stage!'
   end
