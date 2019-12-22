@@ -32,6 +32,13 @@ class HttpHunt
     @response = send_result( { "sentenceCount": total_sentences } )
   end
 
+  def calculate_vowels
+    @response = receive_string
+    return unless @response.has_key?('text')
+    vowels_hash = @response['text'].downcase.scan(/[aeiou]/).sort.group_by(&:itself).inject({}) { |memo,(k,v)| memo.merge({ "#{k.to_s}": v.size }) }
+    @response = send_result(vowels_hash)
+  end
+
   def receive_string
     HTTParty.get(HOST + INPUT_ROUTE, headers: HEADERS)
   end
