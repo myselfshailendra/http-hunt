@@ -9,13 +9,13 @@ begin
   end
 
   case ARGV[0]
-  when 'stag1'
+  when 'stage1'
     http_hunt.calculate_characters
-  when 'stag2'
+  when 'stage2'
     http_hunt.calculate_words
-  when 'stag3'
+  when 'stage3'
     http_hunt.calculate_sentences
-  when 'stag4'
+  when 'stage4'
     http_hunt.calculate_vowels
   else
     puts 'Invalid stage!'

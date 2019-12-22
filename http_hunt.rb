@@ -8,32 +8,28 @@ class HttpHunt
   OUTPUT_ROUTE = '/challenge/output'.freeze
 
   def initialize
-    @response = 'idial'
+    @response = receive_string
   end
 
   def calculate_characters
-    @response = receive_string
     return unless @response.has_key?('text')
     total_characters = @response['text'].length
     @response = send_result( { "count": total_characters } )
   end
 
   def calculate_words
-    @response = receive_string
     return unless @response.has_key?('text')
     total_words = @response['text'].split(' ').size
     @response = send_result( { "wordCount": total_words } )
   end
 
   def calculate_sentences
-    @response = receive_string
     return unless @response.has_key?('text')
     total_sentences = @response['text'].split(/[.?]+[ ]/).size
     @response = send_result( { "sentenceCount": total_sentences } )
   end
 
   def calculate_vowels
-    @response = receive_string
     return unless @response.has_key?('text')
     vowels_hash = @response['text'].downcase.scan(/[aeiou]/).sort.group_by(&:itself).inject({}) { |memo,(k,v)| memo.merge({ "#{k.to_s}": v.size }) }
     @response = send_result(vowels_hash)
