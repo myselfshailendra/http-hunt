@@ -2,7 +2,21 @@ require './http_hunt'
 
 begin
   http_hunt = HttpHunt.new
-  http_hunt.calculate_size
+
+  if ARGV.empty?
+    puts 'Please enter stage you want to play!       Run command as:  ruby play.rb < stage1 || stage2 >'
+    exit
+  end
+
+  case ARGV[0]
+  when 'stag1'
+    http_hunt.calculate_characters
+  when 'stag2'
+    http_hunt.calculate_words
+  else
+    puts 'Invalid stage!'
+  end
+
   puts http_hunt.response
 rescue StandardError => e
   puts e.message

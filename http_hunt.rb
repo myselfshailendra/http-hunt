@@ -11,18 +11,25 @@ class HttpHunt
     @response = 'idial'
   end
 
-  def calculate_size
+  def calculate_characters
     @response = receive_string
     return unless @response.has_key?('text')
-    total_characters = @response['text'].size
-    @response = send_result(total_characters)
+    total_characters = @response['text'].length
+    @response = send_result( { "count": total_characters } )
+  end
+
+  def calculate_words
+    @response = receive_string
+    return unless @response.has_key?('text')
+    total_words = @response['text'].split(' ').size
+    @response = send_result( { "wordCount": total_words } )
   end
 
   def receive_string
     HTTParty.get(HOST + INPUT_ROUTE, headers: HEADERS)
   end
 
-  def send_result(total_characters)
-    HTTParty.post(HOST + OUTPUT_ROUTE, query: { "count": total_characters }, headers: HEADERS)
+  def send_result(query)
+    HTTParty.post(HOST + OUTPUT_ROUTE, query: query, headers: HEADERS)
   end
 end
