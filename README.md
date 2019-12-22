@@ -47,3 +47,9 @@ To play game on satge 2, run:
 ```
     ruby play.rb stag2
 ```
+
+To play game on satge 3, run:
+
+```
+    ruby play.rb stag3
+```
